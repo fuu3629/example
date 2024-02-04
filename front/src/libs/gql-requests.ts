@@ -8,7 +8,7 @@ export function urqlClient(): Promise<Client> {
   return new Promise((resolve, reject) => {
     const client = initUrqlClient(
       {
-        url: GRAPHQL_ENDPOINT,
+        url: "http://localhost:3000/graphql",
         exchanges: [cacheExchange, fetchExchange],
       } as ClientOptions,
       false

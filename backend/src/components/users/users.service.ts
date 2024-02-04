@@ -18,7 +18,6 @@ export class UsersService {
   }
 
   async createUser(args: CreateOneUserArgs): Promise<User> {
-    console.log(args);
     return this.prisma.user.create(args);
   }
 }

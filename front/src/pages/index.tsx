@@ -1,51 +1,22 @@
-import { Inter } from "next/font/google";
 import gql from "graphql-tag";
-import type { GetServerSideProps, NextPage } from "next";
-import { urqlClient } from "../libs/gql-requests";
+import { useQuery, useMutation } from "@apollo/client";
+import { LoginDocument, LoginMutation } from "@/graphql/generated/graphql";
 
-const inter = Inter({ subsets: ["latin"] });
+import type { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
+import { useMemo } from "react";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
 
-type Props = {
-  posts: {
-    id: string;
-    title: string;
-  }[];
-};
-
-export default function Home(props: Props) {
+export default function Home() {
   return (
     <>
-      {props.posts.map((post) => (
-        <div key={post.id}>
-          <h1>{post.title}</h1>
-        </div>
-      ))}
+      <div>こんにちは</div>
+      <div>てすと</div>
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  try {
-    const client = await urqlClient();
-    const postsQuery = gql`
-      query {
-        prismaPosts {
-          id
-          title
-        }
-      }
-    `;
-    const result = await client.query(postsQuery, {}).toPromise();
-
-    return {
-      props: {
-        posts: result.data.prismaPosts,
-      },
-    };
-  } catch (e) {
-    console.error(e);
-    return {
-      notFound: true,
-    };
-  }
-};

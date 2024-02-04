@@ -1,0 +1,11 @@
+mutation Login {
+  login(
+    loginUserInput: { email: "test@example.com", password: "password12345" }
+  ) {
+    user {
+      name
+      email
+    }
+    access_token
+  }
+}
